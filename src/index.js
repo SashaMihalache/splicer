@@ -1,5 +1,12 @@
+window.Splicer = {};
+
 var context;
 var bufferLoader;
+const sampleList = [
+  "src/audio/kick.wav",
+  "src/audio/snare.wav",
+  "src/audio/hihat.wav",
+];
 const playButton = document.querySelector('button');
 
 playButton.addEventListener('click', loadAndPlay);
@@ -12,23 +19,22 @@ function loadAndPlay() {
     alert("Web Audio API is not supported in this browser");
   }
 
-  bufferLoader = new BufferLoader(
+
+  bufferLoader = new Splicer.BufferLoader(
     context,
-    [
-      "src/audio/kick.wav",
-      "src/audio/snare.wav",
-      "src/audio/hihat.wav",
-    ],
-    finishedLoading
+    sampleList,
+    (bufferList) => finishedLoading(bufferList)
   );
 
-  bufferLoader.load();
 }
 
 function playSound(sample, time) {
   var source = context.createBufferSource();
   source.buffer = sample.buffer;
   source.connect(context.destination);
+  if (!source.start) {
+    source.start = source.noteOn;
+  }
   source.start(time);
 }
 
