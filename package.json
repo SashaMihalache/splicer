@@ -1,0 +1,24 @@
+{
+  "name": "splicer",
+  "version": "1.0.0",
+  "description": "***Splicer***: A beat sequencer",
+  "main": "index.js",
+  "scripts": {
+    "start": "node_modules/.bin/http-server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SashaMihalache/splicer.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SashaMihalache/splicer/issues"
+  },
+  "homepage": "https://github.com/SashaMihalache/splicer#readme",
+  "dependencies": {
+    "http-server": "^0.11.1"
+  }
+}
