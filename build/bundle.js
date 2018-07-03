@@ -147,6 +147,7 @@ const sequenceMatrix = {
 playButton.addEventListener('click', handlePlayClick);
 
 function handlePlayClick() {
+  this.innerHTML = '&#9616;&nbsp;&#9612;';
   new Engine(120, sequenceMatrix); //BPM and samplelist
 }
 //# sourceMappingURL=bundle.js.map

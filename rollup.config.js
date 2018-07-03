@@ -1,5 +1,6 @@
 import livereload from 'rollup-plugin-livereload'
 import serve from 'rollup-plugin-server';
+import scss from 'rollup-plugin-scss';
 
 export default {
   input: 'src/main.js',
@@ -17,6 +18,9 @@ export default {
     livereload({
       watch: 'build',
       verbose: true,
+    }),
+    scss({
+      output: 'build/bundle.css'
     })
   ]
 };
