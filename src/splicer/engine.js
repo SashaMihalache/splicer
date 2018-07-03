@@ -5,7 +5,6 @@ class Engine {
     this.tempo = tempo;
     this.sequenceMatrix = sequenceMatrix;
     this.context = null;
-    this.init();
   }
 
   init() {

@@ -51,7 +51,6 @@ class Engine {
     this.tempo = tempo;
     this.sequenceMatrix = sequenceMatrix;
     this.context = null;
-    this.init();
   }
 
   init() {
@@ -137,7 +136,6 @@ class Engine {
   // <><><><><><><><><><><><><><><><> 8th
 
 const playButton = document.querySelector('button');
-
 const sequenceMatrix = {
   "src/audio/kick.wav": ['x', '-', '-', 'x', '-', 'x', 'x', ''],
   "src/audio/snare.wav": ['-', '-', '-', '-', 'x', '-', '-', '-'],
@@ -146,8 +144,10 @@ const sequenceMatrix = {
 
 playButton.addEventListener('click', handlePlayClick);
 
+const SplicerEngine = new Engine(120, sequenceMatrix);
+
 function handlePlayClick() {
   this.innerHTML = '&#9616;&nbsp;&#9612;';
-  new Engine(120, sequenceMatrix); //BPM and samplelist
+  SplicerEngine.init();
 }
 //# sourceMappingURL=bundle.js.map
