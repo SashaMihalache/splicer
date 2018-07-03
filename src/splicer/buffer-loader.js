@@ -43,4 +43,4 @@ class BufferLoader {
 
 }
 
-window.Splicer.BufferLoader = BufferLoader;
+export default BufferLoader;
