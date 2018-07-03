@@ -1,11 +1,9 @@
 import BufferLoader from './buffer-loader';
 
-const MEASURE = 16;
-
 class Engine {
-  constructor(tempo, sampleList) {
+  constructor(tempo, sequenceMatrix) {
     this.tempo = tempo;
-    this.sampleList = sampleList;
+    this.sequenceMatrix = sequenceMatrix;
     this.context = null;
     this.init();
   }
@@ -18,9 +16,11 @@ class Engine {
       alert("Web Audio API is not supported in this browser", e);
     }
 
+    const sampleListURL = Object.keys(this.sequenceMatrix);
+
     new BufferLoader(
       this.context,
-      this.sampleList,
+      sampleListURL,
       (bufferList) => this.finishLoadingBuffers(bufferList)
     );
   }
@@ -49,27 +49,32 @@ class Engine {
   }
 
   playPattern(trackList) {
-
-    const startTime = this.context.currentTime + 0.100;
     const sixteenthNoteTime = (60 / this.tempo) / 4;
+    const MEASURE = 16;
 
-    for (let bar = 0; bar < 2; bar++) {
-      const time = startTime + bar * MEASURE * sixteenthNoteTime;
-      // Play the bass (kick) drum on beats 1, 5
-      this.playSound(trackList[0], time);
-      this.playSound(trackList[0], time + 8 * sixteenthNoteTime);
+    const matrixKeys = Object.keys(this.sequenceMatrix);
+    const matrixValues = matrixKeys.map(key => this.sequenceMatrix[key]);
+    const MEASURE_LENGTH = matrixValues[0].length;
 
-      // Play the snare drum on beats 3, 7
-      this.playSound(trackList[1], time + 4 * sixteenthNoteTime);
-      this.playSound(trackList[1], time + 12 * sixteenthNoteTime);
+    let time = 0;
+    for (let beat = 0; beat < MEASURE_LENGTH; beat++) {
+      let pauseCounter = 0;
+      for (let trackIndex = 0; trackIndex < matrixKeys.length; trackIndex++) {
+        const currentValue = matrixValues[trackIndex][beat];
+        if (currentValue === 'x') {
+          this.playSound(trackList[trackIndex], time);
+        } else {
+          pauseCounter++;
+        }
 
-      // Play the hi-hat every eighth note.
-      for (var i = 0; i < MEASURE; ++i) {
-        this.playSound(trackList[2], time + i * sixteenthNoteTime);
+        if (pauseCounter === matrixKeys.length) {
+          time += sixteenthNoteTime;
+        }
       }
+
+      time += sixteenthNoteTime;
     }
   }
-
 }
 
 export default Engine;
@@ -80,7 +85,10 @@ export default Engine;
   // s -   -   x   -   -   -   x   -
   // h x   x   x   x   x   x   x   x
 
-  // k x - - - - - - - x - - - - - -
-  // s - - - - x - - - - - - - x - -
-  // h x - x - x - x - x - x - x - -
+  // k x - - - - - - - x - - - - - - - 
+  // s - - - - x - - - - - - - x - - -
+  // h x - x - x - x - x - x - x - x -
   // pattern 16th
+  // <------------------------------> measure (1 measure = 4 beats = 8 8ths notes)
+  // <------><------><------><------> beat (1beat = 4 8th notes)
+  // <><><><><><><><><><><><><><><><> 8th
