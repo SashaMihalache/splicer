@@ -7,7 +7,7 @@ class Engine {
     this.context = null;
   }
 
-  init() {
+  async init() {
     try {
       this.context = new AudioContext();
     }
@@ -16,25 +16,13 @@ class Engine {
     }
 
     const sampleListURL = Object.keys(this.sequenceMatrix);
-
     const bufferLoader = new BufferLoader(this.context, sampleListURL);
-
-    bufferLoader.loadAllBuffers().then((bufferList) => {
-      this.createAudioNodes(bufferList)
-    });
+    const bufferList = await bufferLoader.loadAllBuffers();
+    const trackList = this.createTrackChannels(bufferList)
+    this.playPattern(trackList);
   }
 
-  playSound(sample, time) {
-    var source = this.context.createBufferSource();
-    source.buffer = sample.buffer;
-    source.connect(this.context.destination);
-    if (!source.start) {
-      source.start = source.noteOn;
-    }
-    source.start(time);
-  }
-
-  createAudioNodes(bufferList) {
+  createTrackChannels(bufferList) {
     const trackList = []
 
     bufferList.forEach(audio => {
@@ -44,7 +32,7 @@ class Engine {
       trackList.push(track);
     })
 
-    this.playPattern(trackList);
+    return trackList;
   }
 
   playPattern(trackList) {
@@ -73,6 +61,16 @@ class Engine {
 
       time += sixteenthNoteTime;
     }
+  }
+
+  playSound(sample, time) {
+    var source = this.context.createBufferSource();
+    source.buffer = sample.buffer;
+    source.connect(this.context.destination);
+    if (!source.start) {
+      source.start = source.noteOn;
+    }
+    source.start(time);
   }
 }
 

@@ -4,7 +4,7 @@ class BufferLoader {
     this.urlList = urlList;
   }
 
-  loadAllBuffers() {
+  async loadAllBuffers() {
     return new Promise(resolve => {
 
       const promises = [];
