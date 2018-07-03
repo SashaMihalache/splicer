@@ -10,7 +10,5 @@ const sampleList = [
 playButton.addEventListener('click', handlePlayClick);
 
 function handlePlayClick() {
-  new Engine(100, sampleList); //BPM and samplelist
+  new Engine(120, sampleList); //BPM and samplelist
 }
-
-console.log('wtf hah');
