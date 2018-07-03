@@ -4,7 +4,6 @@
   "description": "***Splicer***: A beat sequencer",
   "main": "index.js",
   "scripts": {
-    "server": "node_modules/.bin/live-server",
     "start": "node_modules/.bin/rollup -w -m -c",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -20,8 +19,10 @@
   },
   "homepage": "https://github.com/SashaMihalache/splicer#readme",
   "dependencies": {
-    "http-server": "^0.11.1",
-    "live-server": "^1.2.0",
     "rollup": "^0.62.0"
+  },
+  "devDependencies": {
+    "rollup-plugin-livereload": "^0.6.0",
+    "rollup-plugin-server": "^0.7.0"
   }
 }
