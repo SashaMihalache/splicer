@@ -14,5 +14,5 @@ const SplicerEngine = new Engine(120, sequenceMatrix);
 
 function handlePlayClick() {
   this.innerHTML = '&#9616;&nbsp;&#9612;'
-  SplicerEngine.init();
+  SplicerEngine.init()
 }

@@ -2,46 +2,46 @@
 'use strict';
 
 class BufferLoader {
-  constructor(context, urlList, callback) {
+  constructor(context, urlList) {
     this.context = context;
     this.urlList = urlList;
-    this.isDone = callback;
-    this.bufferList = [];
-    this.loadCount = 0;
-
-    this.init();
   }
 
-  init() {
-    for (let i = 0; i < this.urlList.length; ++i) {
-      this.loadBuffer(this.urlList[i], i);
-    }
+  loadAllBuffers() {
+    return new Promise(resolve => {
+
+      const promises = [];
+      for (let i = 0; i < this.urlList.length; ++i) {
+        const singlePromise = this.loadBuffer(this.urlList[i], i);
+        promises.push(singlePromise);
+      }
+
+      Promise.all(promises).then((bufferList) => {
+        resolve(bufferList);
+      });
+    })
   }
 
   loadBuffer(url, index) {
-    fetch(url)
-      .then(body => {
+    return new Promise((resolve, reject) => {
+      fetch(url)
+        .then(body => {
 
-        body.arrayBuffer()
-          .then(buffer => {
+          body.arrayBuffer()
+            .then(buffer => {
 
-            this.context.decodeAudioData(buffer, (audio) => {
-              if (!audio) alert('Error decoding file data: ' + url);
+              this.context.decodeAudioData(buffer, (audio) => {
+                if (!audio) alert('Error decoding file data: ' + url);
 
-              this.bufferList[index] = audio;
-
-              // when all buffers are loaded and decoded, callback
-              if (++this.loadCount == this.urlList.length) {
-                this.isDone(this.bufferList);
-              }
-            }
-            );
-          })
-          .catch(err => console.log('Error buffering', err));
-      })
-      .catch(err => {
-        alert('Buffer Loader : Fetch Error');
-      });
+                resolve(audio);
+              });
+            })
+            .catch(err => console.log('Error buffering', err));
+        })
+        .catch(err => {
+          alert('Buffer Loader : Fetch Error');
+        });
+    });
   }
 
 }
@@ -63,11 +63,11 @@ class Engine {
 
     const sampleListURL = Object.keys(this.sequenceMatrix);
 
-    new BufferLoader(
-      this.context,
-      sampleListURL,
-      (bufferList) => this.finishLoadingBuffers(bufferList)
-    );
+    const bufferLoader = new BufferLoader(this.context, sampleListURL);
+
+    bufferLoader.loadAllBuffers().then((bufferList) => {
+      this.createAudioNodes(bufferList);
+    });
   }
 
   playSound(sample, time) {
@@ -80,7 +80,7 @@ class Engine {
     source.start(time);
   }
 
-  finishLoadingBuffers(bufferList) {
+  createAudioNodes(bufferList) {
     const trackList = [];
 
     bufferList.forEach(audio => {

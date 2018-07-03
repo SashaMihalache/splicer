@@ -17,11 +17,11 @@ class Engine {
 
     const sampleListURL = Object.keys(this.sequenceMatrix);
 
-    new BufferLoader(
-      this.context,
-      sampleListURL,
-      (bufferList) => this.finishLoadingBuffers(bufferList)
-    );
+    const bufferLoader = new BufferLoader(this.context, sampleListURL);
+
+    bufferLoader.loadAllBuffers().then((bufferList) => {
+      this.createAudioNodes(bufferList)
+    });
   }
 
   playSound(sample, time) {
@@ -34,7 +34,7 @@ class Engine {
     source.start(time);
   }
 
-  finishLoadingBuffers(bufferList) {
+  createAudioNodes(bufferList) {
     const trackList = []
 
     bufferList.forEach(audio => {
