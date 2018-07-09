@@ -90,17 +90,10 @@ class Engine {
 
     let time = 0;
     for (let beat = 0; beat < MEASURE_LENGTH; beat++) {
-      let pauseCounter = 0;
       for (let trackIndex = 0; trackIndex < matrixKeys.length; trackIndex++) {
         const currentValue = matrixValues[trackIndex][beat];
         if (currentValue === 'x') {
           this.playSound(trackList[trackIndex], time);
-        } else {
-          pauseCounter++;
-        }
-
-        if (pauseCounter === matrixKeys.length) {
-          time += sixteenthNoteTime;
         }
       }
 
@@ -135,7 +128,7 @@ class Engine {
 
 const playButton = document.querySelector('button');
 const sequenceMatrix = {
-  "src/audio/kick.wav": ['x', '-', '-', 'x', '-', 'x', 'x', ''],
+  "src/audio/kick.wav": ['x', '-', '-', '-', 'x', '-', '-', '-'],
   "src/audio/snare.wav": ['-', '-', '-', '-', 'x', '-', '-', '-'],
   "src/audio/hihat.wav": ['-', '-', 'x', '-', '-', '-', 'x', '-'],
 };

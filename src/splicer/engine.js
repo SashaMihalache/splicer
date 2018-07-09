@@ -45,17 +45,10 @@ class Engine {
 
     let time = 0;
     for (let beat = 0; beat < MEASURE_LENGTH; beat++) {
-      let pauseCounter = 0;
       for (let trackIndex = 0; trackIndex < matrixKeys.length; trackIndex++) {
         const currentValue = matrixValues[trackIndex][beat];
         if (currentValue === 'x') {
           this.playSound(trackList[trackIndex], time);
-        } else {
-          pauseCounter++;
-        }
-
-        if (pauseCounter === matrixKeys.length) {
-          time += sixteenthNoteTime;
         }
       }
 
