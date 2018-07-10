@@ -5,6 +5,7 @@ class Engine {
     this.tempo = tempo;
     this.sequenceMatrix = sequenceMatrix;
     this.context = null;
+    this.trackList = [];
   }
 
   async init() {
@@ -18,8 +19,7 @@ class Engine {
     const sampleListURL = Object.keys(this.sequenceMatrix);
     const bufferLoader = new BufferLoader(this.context, sampleListURL);
     const bufferList = await bufferLoader.loadAllBuffers();
-    const trackList = this.createTrackChannels(bufferList)
-    this.playPattern(trackList);
+    this.trackList = this.createTrackChannels(bufferList);
   }
 
   createTrackChannels(bufferList) {
@@ -35,19 +35,18 @@ class Engine {
     return trackList;
   }
 
-  playPattern(trackList) {
+  playPattern() {
     const sixteenthNoteTime = (this.tempo / 60) / 32;
-
     const matrixKeys = Object.keys(this.sequenceMatrix);
     const matrixValues = matrixKeys.map(key => this.sequenceMatrix[key]);
-    const MEASURE_LENGTH = matrixValues[0].length;
+    const LEN = matrixValues[0].length;
+    let time = this.context.currentTime;
 
-    let time = 0;
-    for (let beat = 0; beat < MEASURE_LENGTH; beat++) {
+    for (let sixteenthBeat = 0; sixteenthBeat < LEN; sixteenthBeat++) {
       for (let trackIndex = 0; trackIndex < matrixKeys.length; trackIndex++) {
-        const currentValue = matrixValues[trackIndex][beat];
+        const currentValue = matrixValues[trackIndex][sixteenthBeat];
         if (currentValue === 'x') {
-          this.playSound(trackList[trackIndex], time);
+          this.playSound(this.trackList[trackIndex], time);
         }
       }
 
@@ -56,12 +55,9 @@ class Engine {
   }
 
   playSound(sample, time) {
-    var source = this.context.createBufferSource();
+    const source = this.context.createBufferSource();
     source.buffer = sample.buffer;
     source.connect(this.context.destination);
-    if (!source.start) {
-      source.start = source.noteOn;
-    }
     source.start(time);
   }
 }
