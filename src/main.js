@@ -3,9 +3,9 @@ import Engine from './splicer/engine';
 
 const playButton = document.querySelector('button');
 const sequenceMatrix = {
-  "src/audio/kick.wav": ['x', '-', '-', '-', 'x', '-', '-', '-'],
-  "src/audio/snare.wav": ['-', '-', '-', '-', 'x', '-', '-', '-'],
-  "src/audio/hihat.wav": ['-', '-', 'x', '-', '-', '-', 'x', '-'],
+  "src/audio/kick.wav": ['x', '-', '-', '-', '-', '-', '-', '-', 'x', '-', '-', '-', '-', '-', '-', '-'],
+  "src/audio/snare.wav": ['-', '-', '-', '-', '-', '-', '-', '-', 'x', '-', '-', '-', '-', '-', '-', '-'],
+  "src/audio/hihat.wav": ['-', '-', '-', 'x', '-', '-', '-', '-', '-', '-', 'x', '-', 'x', '-', 'x', '-'],
 }
 
 playButton.addEventListener('click', handlePlayClick);

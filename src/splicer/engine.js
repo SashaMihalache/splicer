@@ -36,8 +36,7 @@ class Engine {
   }
 
   playPattern(trackList) {
-    const sixteenthNoteTime = (60 / this.tempo) / 4;
-    const MEASURE = 16;
+    const sixteenthNoteTime = (this.tempo / 60) / 32;
 
     const matrixKeys = Object.keys(this.sequenceMatrix);
     const matrixValues = matrixKeys.map(key => this.sequenceMatrix[key]);
@@ -82,3 +81,5 @@ export default Engine;
   // <------------------------------> measure (1 measure = 4 beats = 8 8ths notes)
   // <------><------><------><------> beat (1beat = 4 8th notes)
   // <><><><><><><><><><><><><><><><> 8th
+
+  // 1 measure = 16 sixteenth notes

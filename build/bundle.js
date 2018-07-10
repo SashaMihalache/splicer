@@ -82,7 +82,7 @@ class Engine {
   }
 
   playPattern(trackList) {
-    const sixteenthNoteTime = (60 / this.tempo) / 4;
+    const sixteenthNoteTime = (this.tempo / 60) / 32;
 
     const matrixKeys = Object.keys(this.sequenceMatrix);
     const matrixValues = matrixKeys.map(key => this.sequenceMatrix[key]);
@@ -126,11 +126,13 @@ class Engine {
   // <------><------><------><------> beat (1beat = 4 8th notes)
   // <><><><><><><><><><><><><><><><> 8th
 
+  // 1 measure = 16 sixteenth notes
+
 const playButton = document.querySelector('button');
 const sequenceMatrix = {
-  "src/audio/kick.wav": ['x', '-', '-', '-', 'x', '-', '-', '-'],
-  "src/audio/snare.wav": ['-', '-', '-', '-', 'x', '-', '-', '-'],
-  "src/audio/hihat.wav": ['-', '-', 'x', '-', '-', '-', 'x', '-'],
+  "src/audio/kick.wav": ['x', '-', '-', '-', '-', '-', '-', '-', 'x', '-', '-', '-', '-', '-', '-', '-'],
+  "src/audio/snare.wav": ['-', '-', '-', '-', '-', '-', '-', '-', 'x', '-', '-', '-', '-', '-', '-', '-'],
+  "src/audio/hihat.wav": ['-', '-', '-', 'x', '-', '-', '-', '-', '-', '-', 'x', '-', 'x', '-', 'x', '-'],
 };
 
 playButton.addEventListener('click', handlePlayClick);
