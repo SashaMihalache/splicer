@@ -1,4 +1,5 @@
 import BufferLoader from './buffer-loader';
+import Matrix from './Matrix';
 
 class Engine {
   constructor(tempo, sequenceMatrix) {
@@ -16,6 +17,8 @@ class Engine {
     catch (e) {
       alert("Web Audio API is not supported in this browser", e);
     }
+
+    Matrix.render(this.sequenceMatrix);
 
     const sampleListURL = Object.keys(this.sequenceMatrix);
     const bufferLoader = new BufferLoader(this.context, sampleListURL);
@@ -37,8 +40,8 @@ class Engine {
   }
 
   playPattern(isPlaying) {
-    const sixteenthNoteTime = (this.tempo / 60) / 32;
-    const matrixKeys = Object.keys(this.sequenceMatrix);
+    const sixteenthNoteTime = (60 / this.tempo) / 8;
+    const matrixKeys = Matrix.getKeys(this.sequenceMatrix);
     const matrixValues = matrixKeys.map(key => this.sequenceMatrix[key]);
     const LEN = matrixValues[0].length;
     const LOOP_TIME = LEN * sixteenthNoteTime * 1000;
@@ -69,10 +72,6 @@ class Engine {
     source.buffer = sample.buffer;
     source.connect(this.context.destination);
     source.start(time);
-  }
-
-  start() {
-
   }
 
   stop() {

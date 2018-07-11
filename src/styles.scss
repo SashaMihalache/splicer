@@ -1,3 +1,10 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
 .play-button {
   width: 40px;
   height: 40px;
@@ -6,4 +13,25 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+#matrix {
+  margin-top: 20px;
+  display: flex;
+  
+  .left-col {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+
+    .track-title {
+      
+    }
+  }
+  
+  .right-col {
+    flex: 7;
+    .track-line {
+    }
+  }
 }

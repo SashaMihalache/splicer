@@ -12,6 +12,7 @@ let isPlaying = false;
 playButton.addEventListener('click', handlePlayToggle);
 
 const SplicerEngine = new Engine(120, sequenceMatrix);
+
 SplicerEngine.init();
 
 function handlePlayToggle() {
