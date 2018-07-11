@@ -7,13 +7,16 @@ const sequenceMatrix = {
   "src/audio/snare.wav": ['-', '-', '-', '-', '-', '-', '-', '-', 'x', '-', '-', '-', '-', '-', '-', '-'],
   "src/audio/hihat.wav": ['-', '-', '-', '-', 'x', '-', '-', '-', 'x', '-', 'x', '-', 'x', '-', 'x', '-'],
 }
+let isPlaying = false;
 
-playButton.addEventListener('click', handlePlayClick);
+playButton.addEventListener('click', handlePlayToggle);
 
 const SplicerEngine = new Engine(120, sequenceMatrix);
 SplicerEngine.init();
 
-function handlePlayClick() {
-  this.innerHTML = '&#9616;&nbsp;&#9612;'
-  SplicerEngine.playPattern();
+function handlePlayToggle() {
+  this.innerHTML = isPlaying ? '&#9654;' : '&#9616;&nbsp;&#9612;'
+  isPlaying = !isPlaying;
+
+  SplicerEngine.playPattern(isPlaying);
 }

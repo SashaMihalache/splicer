@@ -5,6 +5,7 @@ class Engine {
     this.tempo = tempo;
     this.sequenceMatrix = sequenceMatrix;
     this.context = null;
+    this.interval = null;
     this.trackList = [];
   }
 
@@ -35,23 +36,32 @@ class Engine {
     return trackList;
   }
 
-  playPattern() {
+  playPattern(isPlaying) {
     const sixteenthNoteTime = (this.tempo / 60) / 32;
     const matrixKeys = Object.keys(this.sequenceMatrix);
     const matrixValues = matrixKeys.map(key => this.sequenceMatrix[key]);
     const LEN = matrixValues[0].length;
-    let time = this.context.currentTime;
+    const LOOP_TIME = LEN * sixteenthNoteTime * 1000;
 
-    for (let sixteenthBeat = 0; sixteenthBeat < LEN; sixteenthBeat++) {
-      for (let trackIndex = 0; trackIndex < matrixKeys.length; trackIndex++) {
-        const currentValue = matrixValues[trackIndex][sixteenthBeat];
-        if (currentValue === 'x') {
-          this.playSound(this.trackList[trackIndex], time);
+    if (!isPlaying) {
+      this.stop();
+    } else {
+
+      this.interval = setInterval(() => {
+        let time = this.context.currentTime;
+        for (let sixteenthBeat = 0; sixteenthBeat < LEN; sixteenthBeat++) {
+          for (let trackIndex = 0; trackIndex < matrixKeys.length; trackIndex++) {
+            const currentValue = matrixValues[trackIndex][sixteenthBeat];
+            if (currentValue === 'x') {
+              this.playSound(this.trackList[trackIndex], time);
+            }
+          }
+
+          time += sixteenthNoteTime;
         }
-      }
-
-      time += sixteenthNoteTime;
+      }, LOOP_TIME);
     }
+
   }
 
   playSound(sample, time) {
@@ -59,6 +69,14 @@ class Engine {
     source.buffer = sample.buffer;
     source.connect(this.context.destination);
     source.start(time);
+  }
+
+  start() {
+
+  }
+
+  stop() {
+    clearInterval(this.interval);
   }
 }
 
