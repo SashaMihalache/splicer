@@ -25,13 +25,14 @@ body {
     flex-direction: column;
 
     .track-title {
-      
+      color: #333;
     }
   }
   
   .right-col {
     flex: 7;
     .track-line {
+      background-color: #aaaaaa;
     }
   }
 }
