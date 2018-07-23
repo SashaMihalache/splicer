@@ -9,6 +9,7 @@ const SplicerEngine = new Engine(120);
 
 SplicerEngine.init();
 
+
 function handlePlayToggle() {
   this.innerHTML = isPlaying ? '&#9654;' : '&#9616;&nbsp;&#9612;';
   isPlaying = !isPlaying;
