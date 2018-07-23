@@ -1,7 +1,7 @@
 import './styles.scss';
 import Engine from './splicer/engine';
 
-/* eslint-disable-line */
+// eslint-disable-next-line
 const playButton = document.querySelector('button');
 let isPlaying = false;
 
