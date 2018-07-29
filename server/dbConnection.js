@@ -84,6 +84,19 @@ class DBConnection {
     });
   }
 
+  getSound(id) {
+    return new Promise((resolve, reject) => {
+      new this.sql.Request()
+        .query(`SELECT * from BlobTest WHERE ID = ${id}`)
+        .then((res) => {
+          resolve(res.recordset[0].blobdata);
+        })
+        .catch((err) => {
+          console.log('err', err);
+        });
+    });
+  }
+
   close() {
     console.log('Connection closed.');
     this.sql.close();

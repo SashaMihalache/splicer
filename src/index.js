@@ -1,10 +1,12 @@
 import './styles.scss';
 import Engine from './splicer/engine';
 import FileUploader from './upload/FileUploader';
+import LoadAudio from './load-audio/LoadAudio';
 
 // eslint-disable-next-line
 const playButton = document.querySelector('button');
 const uploadButton = document.getElementById('upload-button');
+const fetchButton = document.getElementById('fetch-sound');
 
 let isPlaying = false;
 
@@ -22,3 +24,4 @@ function handlePlayToggle() {
 
 playButton.addEventListener('click', handlePlayToggle);
 uploadButton.addEventListener('click', FileUploader.handleUpload);
+fetchButton.addEventListener('click', LoadAudio.getSound);

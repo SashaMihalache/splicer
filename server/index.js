@@ -3,6 +3,9 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import multiparty from 'multiparty';
 import FormData from 'form-data';
+import {
+  ab2str, str2ab, ab2b, b2ab,
+} from './helper';
 
 import DbConnection from './dbConnection';
 
@@ -18,30 +21,31 @@ app.get('/', (req, res) => {
   res.send('Hello world');
 });
 
-app.post('/upload-audio', (req, res) => {
-  const form = new multiparty.Form();
+app.get('/audio/:id', (req, res) => {
+  const { id } = req.params;
+  db.getSound(id).then((result) => {
+    const arrayBuffer = b2ab(result);
+    const stringBuffer = ab2str(arrayBuffer);
+    res.json({ data: stringBuffer });
+  });
+});
 
-  // form.on('part', (part) => {
-  //   if (part.filename) {
-  //     // const formData = new FormData();
-  //     // formData.append('thumbnail', part, { filename: part.filename, contentType: part['content-type'] });
-  //     db.handleUpload(part).then(() => {
-  //       res.json({ success: 'true' });
-  //     });
-  //   }
-  // });
+app.post('/audio/upload', (req, res) => {
+  const form = new multiparty.Form();
 
   form.on('error', (error) => {
     console.log(error);
   });
 
   form.parse(req, (err, fields, files) => {
-    console.log(err, fields, files);
     if (err) {
       console.log(err);
     }
 
-    db.handleUpload(files.audio[0]).then(() => {
+    const arrayBuffer = str2ab(fields.audio[0]);
+    const buffer = ab2b(arrayBuffer);
+
+    db.handleUpload(buffer).then(() => {
       res.json({ success: true });
     });
   });

@@ -24,8 +24,9 @@ class BufferLoader {
         .then((body) => {
           body.arrayBuffer()
             .then((buffer) => {
+              console.log('ac');
               this.context.decodeAudioData(buffer, (audio) => {
-                if (!audio) alert(`Error decoding file data: ${  url}`);
+                if (!audio) alert(`Error decoding file data: ${url}`);
 
                 resolve(audio);
               });

@@ -6,10 +6,11 @@ class FileUploader {
     fileReader.onloadend = (e) => {
       const formData = new FormData();
       const arrayBuffer = e.target.result;
-      const blob = new Blob([arrayBuffer]);
-      formData.append('audio', blob);
+      const strBuffer = FileUploader.ab2str(arrayBuffer);
+      // const blob = new Blob([arrayBuffer]);
+      formData.append('audio', strBuffer);
 
-      fetch('http://localhost:3000/upload-audio', {
+      fetch('http://localhost:3000/audio/upload', {
         method: 'POST',
         body: formData,
       })
@@ -22,6 +23,10 @@ class FileUploader {
     };
 
     fileReader.readAsArrayBuffer(audioFile);
+  }
+
+  static ab2str(buf) {
+    return String.fromCharCode.apply(null, new Uint16Array(buf));
   }
 }
 
