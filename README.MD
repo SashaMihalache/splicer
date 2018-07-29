@@ -1,46 +1,52 @@
 ***Splicer***: A beat sequencer
 
-**pre-commit hook**
-Paste this in .git/hooks/pre-commit and then run 'chmod +x .git/hooks/pre-commit'
+** start docker container **
 
-#!/bin/sh
+sudo docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=<YourStrong!Passw0rd>' \
+   -p 1433:1433 --name sql1 \
+   -d microsoft/mssql-server-linux:2017-latest
 
-STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep ".jsx\{0,1\}$")
-ESLINT="$(git rev-parse --show-toplevel)/node_modules/.bin/eslint"
 
-if [[ "$STAGED_FILES" = "" ]]; then
-  exit 0
-fi
+** view docker containers **
 
-PASS=true
+docker ps -a 
 
-printf "\nValidating Javascript:\n"
 
-# Check for eslint
-if [[ ! -x "$ESLINT" ]]; then
-  printf "\t\033[41mPlease install ESlint\033[0m (npm i --save-dev eslint)"
-  exit 1
-fi
+** change sa password **
 
-for FILE in $STAGED_FILES
-do
-  "$ESLINT" "$FILE"
+sudo docker exec -it sql1 /opt/mssql-tools/bin/sqlcmd \
+   -S localhost -U SA -P '<YourStrong!Passw0rd>' \
+   -Q 'ALTER LOGIN SA WITH PASSWORD="<YourNewStrong!Passw0rd>"'
 
-  if [[ "$?" == 0 ]]; then
-    printf "\t\033[32mESLint Passed: $FILE\033[0m"
-  else
-    printf "\t\033[41mESLint Failed: $FILE\033[0m"
-    PASS=false
-  fi
-done
 
-printf "\nJavascript validation completed!\n"
+** connect to sql server **
 
-if ! $PASS; then
-  printf "\033[41mCOMMIT FAILED:\033[0m Your commit contains files that should pass ESLint but do not. Please fix the ESLint errors and try again.\n"
-  exit 1
-else
-  printf "\033[42mCOMMIT SUCCEEDED\033[0m\n"
-fi
+docker exec -it sql1 'bash'
 
-exit $?
+
+** connect inside the container with sqlcmd **
+
+/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P 'P@ssw0rd'
+
+
+** working with sql from terminal **
+
+CREATE DATABASE TEstDB
+USE TestDB
+
+SELECT Name from sys.Databases
+SELECT Name from sys.Tables
+
+CREATE TABLE test ( id INT, name NVARCHAR(50), quantity INT )
+INSERT INTO test values (1, 'sasha', 10)
+GO
+
+
+** exit from sql terminal **
+quit
+exit
+
+
+** remove container **
+docker stop sql1
+docker rm sql1

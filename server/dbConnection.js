@@ -1,75 +1,93 @@
-// import mssql from 'mssql';
-import mysql from 'mysql';
-
-class DBConnection {
-  constructor() {
-    this.connection = mysql.createConnection({
-      host: 'localhost',
-      user: 'sa',
-      password: 'sa',
-      database: 'SplicerDemo',
-    });
-  }
-
-  connect() {
-    this.connection.connect();
-    this.connection.query('SELECT * from test', (err, results, fields) => {
-      if (err) throw err;
-      console.log('Results: ', results);
-    });
-  }
-}
+import mssql from 'mssql';
+import { resolve } from '../node_modules/uri-js';
+// import mysql from 'mysql';
 
 // class DBConnection {
 //   constructor() {
-//     this.sql = mssql;
-//     this.config = ({
+//     this.connection = mysql.createConnection({
+//       host: 'localhost',
 //       user: 'sa',
 //       password: 'sa',
-//       server: 'localhost',
 //       database: 'SplicerDemo',
-//       port: 3306,
-//       options: {
-//         encrypt: true,
-//       },
 //     });
 //   }
 
 //   connect() {
-//     this.sql.connect(this.config, (err) => {
-//       console.log('intra', err);
-//       if (err) {
-//         this.sql.close();
-//       } else {
-//         console.log('Connected to DB');
-
-//         this.testRequest();
-//       }
+//     this.connection.connect();
+//     this.connection.query('SELECT * from test', (err, results) => {
+//       if (err) throw err;
+//       console.log('Results: ', results);
 //     });
-
-//     this.sql.on('error', (err) => {
-//       console.log(err);
-//       this.sql.close();
-//     });
-//   }
-
-//   testRequest() {
-//     new this.sql.Request().query(
-//       'SELECT * from test;',
-//       (err, result) => {
-//         if (err) {
-//           console.log('intrs 2', err);
-//           return;
-//         }
-//         console.log(result);
-//       },
-//     );
-//   }
-
-//   close() {
-//     console.log('Connection closed.');
-//     this.sql.close();
 //   }
 // }
+
+class DBConnection {
+  constructor() {
+    this.sql = mssql;
+    this.config = ({
+      user: 'sa',
+      password: 'P@ssw0rd',
+      server: 'localhost',
+      database: 'TestDB',
+      port: 1433,
+      options: {
+        encrypt: true,
+      },
+    });
+  }
+
+  connect() {
+    this.sql.connect(this.config, (err) => {
+      console.log('intra', err);
+      if (err) {
+        this.sql.close();
+      } else {
+        console.log('Connected to DB');
+
+        this.testRequest();
+      }
+    });
+
+    this.sql.on('error', (err) => {
+      console.log(err);
+      this.sql.close();
+    });
+  }
+
+  testRequest() {
+    new this.sql.Request().query(
+      'SELECT * from test;',
+      (err, result) => {
+        if (err) {
+          console.log('err', err);
+          return;
+        }
+        console.log(result);
+      },
+    );
+  }
+
+  handleUpload(data) {
+    return new Promise((resolve, reject) => {
+      new this.sql.Request()
+        .input('blobname', 'testing')
+        .input('blobdata', mssql.VarBinary(mssql.MAX), data)
+        .query('insert into BlobTest (name, blobdata) values (@blobname, @blobdata)')
+        .then((res) => {
+          console.log('success', res);
+          resolve();
+        })
+        .catch((err) => {
+          console.log('err', err);
+          reject();
+        });
+    });
+  }
+
+  close() {
+    console.log('Connection closed.');
+    this.sql.close();
+  }
+}
 
 export default DBConnection;

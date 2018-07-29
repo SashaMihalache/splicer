@@ -1,8 +1,11 @@
 import './styles.scss';
 import Engine from './splicer/engine';
+import FileUploader from './upload/FileUploader';
 
 // eslint-disable-next-line
 const playButton = document.querySelector('button');
+const uploadButton = document.getElementById('upload-button');
+
 let isPlaying = false;
 
 const SplicerEngine = new Engine(120);
@@ -18,3 +21,4 @@ function handlePlayToggle() {
 }
 
 playButton.addEventListener('click', handlePlayToggle);
+uploadButton.addEventListener('click', FileUploader.handleUpload);
