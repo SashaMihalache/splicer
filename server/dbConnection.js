@@ -1,25 +1,4 @@
 import mssql from 'mssql';
-import { resolve } from '../node_modules/uri-js';
-// import mysql from 'mysql';
-
-// class DBConnection {
-//   constructor() {
-//     this.connection = mysql.createConnection({
-//       host: 'localhost',
-//       user: 'sa',
-//       password: 'sa',
-//       database: 'SplicerDemo',
-//     });
-//   }
-
-//   connect() {
-//     this.connection.connect();
-//     this.connection.query('SELECT * from test', (err, results) => {
-//       if (err) throw err;
-//       console.log('Results: ', results);
-//     });
-//   }
-// }
 
 class DBConnection {
   constructor() {
@@ -67,12 +46,12 @@ class DBConnection {
     );
   }
 
-  handleUpload(data) {
+  handleUpload(name, data) {
     return new Promise((resolve, reject) => {
       new this.sql.Request()
-        .input('blobname', 'testing')
+        .input('blobname', name)
         .input('blobdata', mssql.VarBinary(mssql.MAX), data)
-        .query('insert into BlobTest (name, blobdata) values (@blobname, @blobdata)')
+        .query('insert into Audio (name, blobdata) values (@blobname, @blobdata)')
         .then((res) => {
           console.log('success', res);
           resolve();
@@ -87,12 +66,26 @@ class DBConnection {
   getSound(id) {
     return new Promise((resolve, reject) => {
       new this.sql.Request()
-        .query(`SELECT * from BlobTest WHERE ID = ${id}`)
+        .query(`SELECT * from Audio WHERE ID = ${id}`)
         .then((res) => {
           resolve(res.recordset[0].blobdata);
         })
         .catch((err) => {
           console.log('err', err);
+        });
+    });
+  }
+
+  getAllSounds() {
+    return new Promise((resolve, reject) => {
+      new this.sql.Request()
+        .query('SELECT id, name from Audio')
+        .then((res) => {
+          resolve(res.recordsets);
+        })
+        .catch((err) => {
+          console.log('err', err);
+          reject(err);
         });
     });
   }

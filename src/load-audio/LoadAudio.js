@@ -1,6 +1,31 @@
 class LoadAudio {
-  static getSound() {
-    fetch('http://localhost:3000/audio/1')
+  static getAllSamples() {
+    fetch('http://localhost:3000/audio')
+      .then(body => body.json())
+      .then(({ data }) => {
+        const d = document.getElementsByClassName('samples-list')[0];
+
+        data[0].forEach((sample) => {
+          const sampleDiv = document.createElement('div');
+          const sampleButton = document.createElement('button');
+          sampleButton.innerHTML = '▶';
+          sampleDiv.innerHTML = `${sample.name}`;
+          sampleDiv.appendChild(sampleButton);
+          sampleDiv.classList.add('playable-sample');
+          sampleButton.addEventListener('click', () => {
+            LoadAudio.getSound(sample.id);
+          });
+
+          d.appendChild(sampleDiv);
+        });
+      })
+      .catch((err) => {
+        console.log('err', err);
+      });
+  }
+
+  static getSound(id) {
+    fetch(`http://localhost:3000/audio/${id}`)
       .then((body) => {
         console.log(body);
         body.json()

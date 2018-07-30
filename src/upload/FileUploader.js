@@ -6,9 +6,11 @@ class FileUploader {
     fileReader.onloadend = (e) => {
       const formData = new FormData();
       const arrayBuffer = e.target.result;
+      console.log(audioFile);
       const strBuffer = FileUploader.ab2str(arrayBuffer);
       // const blob = new Blob([arrayBuffer]);
       formData.append('audio', strBuffer);
+      formData.append('name', audioFile.name);
 
       fetch('http://localhost:3000/audio/upload', {
         method: 'POST',

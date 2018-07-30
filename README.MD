@@ -38,6 +38,7 @@ SELECT Name from sys.Databases
 SELECT Name from sys.Tables
 
 CREATE TABLE test ( id INT, name NVARCHAR(50), quantity INT )
+CREATE TABLE audio ( id INT IDENTITY(1,1) PRIMARY KEY, name NVARCHAR(50), blobdata VARBINARY(MAX))
 INSERT INTO test values (1, 'sasha', 10)
 GO
 

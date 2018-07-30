@@ -21,6 +21,12 @@ app.get('/', (req, res) => {
   res.send('Hello world');
 });
 
+app.get('/audio', (req, res) => {
+  db.getAllSounds().then((result) => {
+    res.json({ data: result });
+  });
+});
+
 app.get('/audio/:id', (req, res) => {
   const { id } = req.params;
   db.getSound(id).then((result) => {
@@ -44,8 +50,9 @@ app.post('/audio/upload', (req, res) => {
 
     const arrayBuffer = str2ab(fields.audio[0]);
     const buffer = ab2b(arrayBuffer);
+    const name = fields.name[0];
 
-    db.handleUpload(buffer).then(() => {
+    db.handleUpload(name, buffer).then(() => {
       res.json({ success: true });
     });
   });

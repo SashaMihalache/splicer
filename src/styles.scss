@@ -1,3 +1,5 @@
+$width: 450px;
+
 body {
   display: flex;
   justify-content: center;
@@ -5,40 +7,65 @@ body {
   flex-direction: column;
 }
 
-.play-button {
-  width: 40px;
-  height: 40px;
-  outline: none;
-  font-size: 1.5em;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-#matrix {
-  margin-top: 20px;
-  display: flex;
-  
-  .left-col {
-    flex: 2;
+.top {
+  margin: 50px 50px;
+  width: $width;
+  .play-button {
+    width: 40px;
+    height: 40px;
+    outline: none;
+    font-size: 1.5em;
     display: flex;
-    flex-direction: column;
-
-    .track-title {
-      color: #333;
-    }
+    justify-content: center;
+    align-items: center;
   }
   
-  .right-col {
-    flex: 7;
-    .track-line {
-      background-color: #aaaaaa;
+  #matrix {
+    margin-top: 20px;
+    display: flex;
+    
+    .left-col {
+      flex: 2;
+      display: flex;
+      flex-direction: column;
+  
+      .track-title {
+        color: #333;
+      }
+    }
+    
+    .right-col {
+      flex: 7;
+      .track-line {
+        background-color: #aaaaaa;
+      }
     }
   }
+
 }
 
-.upload-form {
-  margin-right: 50px;
-  display: flex;
-  flex-direction: column;
+
+.middle {
+  margin: 50px 50px;
+  width: $width;
+  .upload-form {
+    display: flex; 
+    margin-right: 50px;
+  }
+
+}
+
+.bottom {
+  margin: 50px 50px;
+  width: $width;
+  .samples-list {
+    .playable-sample {
+      margin: 10px 10px;
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+  #fetch-sound {
+
+  }
 }
