@@ -55,8 +55,11 @@ docker rm sql1
 
 
 ** copy files from your machine to docker container **
+
 cd /backend/db_scripts
 tar -c * | docker exec -i sql1 /bin/tar -C /tmp -x
 
 ** how to run the script from the docker container with bash **
-opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P 'P@ssw0rd' -i /tmp/UpdateDb.sql
+
+move in /tmp folder where the files where copied and run
+../opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P 'P@ssw0rd' -i ./UpdateDb.sql
