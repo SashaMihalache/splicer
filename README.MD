@@ -5,7 +5,6 @@
 ### pull docker container with sql server
 `docker pull microsoft/mssql-server-linux:2017-latest`
 
-<br/>
 
 ### start docker container
 
@@ -13,7 +12,6 @@
 `   -p 1535:1535 --name internship_db ` <br/>
 `   -d microsoft/mssql-server-linux:2017-latest` <br/>
 
-<br/>
 
 ### view docker containers
 
