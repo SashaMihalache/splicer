@@ -7,8 +7,8 @@
 
 **start docker container**
 
-`sudo docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=internship_user' \
-   -p 1535:1535 --name internship_db \
+`sudo docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=internship_user' <br/>
+   -p 1535:1535 --name internship_db <br/>
    -d microsoft/mssql-server-linux:2017-latest`
 
 <br/>
