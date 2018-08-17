@@ -7,8 +7,8 @@
 
 **start docker container**
 
-`sudo docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=internship_user' <br/>
-   -p 1535:1535 --name internship_db <br/>
+`sudo docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=internship_user' \
+   -p 1535:1535 --name internship_db \
    -d microsoft/mssql-server-linux:2017-latest`
 
 <br/>
@@ -80,7 +80,10 @@ tar -c * | docker exec -i sql1 /bin/tar -C /tmp -x`
 
 **how to run the script from the docker container with bash**
 
-move in /tmp folder where the files where copied and run
+move in /tmp folder where the files where copied and run 
+
+<br/>
+
 `../opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P 'P@ssw0rd' -i ./UpdateDb.sql`
 
 <br/>
