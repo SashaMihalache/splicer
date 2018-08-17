@@ -6,10 +6,10 @@
 `docker pull microsoft/mssql-server-linux:2017-latest`
 
 
-### start docker container
+### start docker container (1433 host port/ 1535 container port)
 
 `sudo docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=internship_user'` <br/>
-`   -p 1535:1535 --name internship_db ` <br/>
+`   -p 1535:1433 --name sql1 ` <br/>
 `   -d microsoft/mssql-server-linux:2017-latest` <br/>
 
 
