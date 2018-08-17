@@ -1,11 +1,13 @@
-***Splicer***: A beat sequencer
+# Splicer: A beat sequencer
 
-**pull docker container with sql server**
+<br/>
+
+### pull docker container with sql server
 `docker pull microsoft/mssql-server-linux:2017-latest`
 
 <br/>
 
-**start docker container**
+### start docker container
 
 `sudo docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=internship_user' \
    -p 1535:1535 --name internship_db \
@@ -13,13 +15,13 @@
 
 <br/>
 
-**view docker containers**
+### view docker containers
 
 `docker ps -a`
 
 <br/>
 
-**change sa password**
+### change sa user's password
 
 `sudo docker exec -it sql1 /opt/mssql-tools/bin/sqlcmd \
    -S localhost -U SA -P 'intership_user' \
@@ -27,19 +29,19 @@
 
 <br/>
 
-**connect to sql server**
+### connect to sql server
 
 `docker exec -it sql1 'bash'`
 
 <br/>
 
-**connect inside the container with sqlcmd**
+### connect inside the container with sqlcmd
 
 `/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P 'internship_user'`
 
 <br/>
 
-**working with sql from terminal (type GO after each statement)**
+### working with sql from terminal (type GO after each statement)
 
 `CREATE DATABASE InternshipProject
 USE InternshipProject`
@@ -58,27 +60,27 @@ GO`
 
 <br/>
 
-**exit from sql terminal**
+### exit from sql terminal
 `quit
 exit`
 
 <br/>
 
-**remove container**
+### remove container
 `docker stop sql1
 <br/>
 docker rm sql1`
 
 <br/>
 
-**copy files from your machine to docker container**
+### copy files from your machine to docker container
 
 `cd /backend/db_scripts <br/>
 tar -c * | docker exec -i sql1 /bin/tar -C /tmp -x`
 
 <br/>
 
-**how to run the script from the docker container with bash**
+### how to run the script from the docker container with bash
 
 move in /tmp folder where the files where copied and run 
 
@@ -88,7 +90,7 @@ move in /tmp folder where the files where copied and run
 
 <br/>
 
-**make a shell script to run this automatically** 
+### make a shell script to run this automatically
 1. apt-get update (to update linux package manager)
 2. apt-get install vim
 3. use vim to write in a seed.sh '../opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P 'P@ssw0rd' -i ./UpdateDb.sql' command
