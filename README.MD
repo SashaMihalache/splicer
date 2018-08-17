@@ -10,12 +10,12 @@
    -d microsoft/mssql-server-linux:2017-latest`
 
 
-**view docker containers **
+**view docker containers**
 
 `docker ps -a`
 
 
-**change sa password **
+**change sa password**
 
 `sudo docker exec -it sql1 /opt/mssql-tools/bin/sqlcmd \
    -S localhost -U SA -P '<Passw0rd>' \
