@@ -17,7 +17,6 @@
 
 `docker ps -a`
 
-<br/>
 
 ### change sa user's password
 
@@ -29,13 +28,11 @@
 
 `docker exec -it sql1 'bash'`
 
-<br/>
 
 ### connect inside the container with sqlcmd
 
 `/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P 'internship_user'`
 
-<br/>
 
 ### working with sql from terminal (type GO after each statement)
 
@@ -54,36 +51,30 @@
 `INSERT INTO test values (1, 'sasha', 10)` <br/>
 GO`
 
-<br/>
 
 ### exit from sql terminal
 `quit
 exit`
 
-<br/>
 
 ### remove container
 `docker stop sql1` <br/>
 `docker rm sql1`
 
-<br/>
 
 ### copy files from your machine to docker container
 
 `cd /backend/db_scripts` <br/>
 `tar -c * | docker exec -i sql1 /bin/tar -C /tmp -x`
 
-<br/>
 
 ### how to run the script from the docker container with bash
 
 move in /tmp folder where the files where copied and run 
 
-<br/>
 
 `../opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P 'P@ssw0rd' -i ./UpdateDb.sql`
 
-<br/>
 
 ### make a shell script to run this automatically
 1. apt-get update (to update linux package manager)
