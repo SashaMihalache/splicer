@@ -49,7 +49,7 @@
 `CREATE TABLE test ( id INT, name NVARCHAR(50), quantity INT )` <br/>
 `CREATE TABLE audio ( id INT IDENTITY(1,1) PRIMARY KEY, name NVARCHAR(50), blobdata VARBINARY(MAX))` <br/>
 `INSERT INTO test values (1, 'sasha', 10)` <br/>
-GO`
+`GO`
 
 
 ### exit from sql terminal
