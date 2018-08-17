@@ -1,5 +1,8 @@
 ***Splicer***: A beat sequencer
 
+**pull docker container with sql server**
+`docker pull microsoft/mssql-server-linux:2017-latest`
+
 **start docker container**
 
 `sudo docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=<YourStrong!Passw0rd>' \
