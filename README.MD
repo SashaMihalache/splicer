@@ -32,15 +32,15 @@
 `/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P 'P@ssw0rd'`
 
 
-**working with sql from terminal**
+**working with sql from terminal (type GO after each statement)**
 
-`CREATE DATABASE TEstDB
-USE TestDB
+`CREATE DATABASE InternshipProject
+USE InternshipProject`
 
-SELECT Name from sys.Databases
-SELECT Name from sys.Tables
+`SELECT Name from sys.Databases
+SELECT Name from sys.Tables`
 
-CREATE TABLE test ( id INT, name NVARCHAR(50), quantity INT )
+`CREATE TABLE test ( id INT, name NVARCHAR(50), quantity INT )
 CREATE TABLE audio ( id INT IDENTITY(1,1) PRIMARY KEY, name NVARCHAR(50), blobdata VARBINARY(MAX))
 INSERT INTO test values (1, 'sasha', 10)
 GO`
