@@ -61,6 +61,9 @@ exit`
 `docker stop sql1` <br/>
 `docker rm sql1`
 
+### remove docker image
+`docker images -a` <br/>
+`docker rmi <hashid>`
 
 ### copy files from your machine to docker container
 
