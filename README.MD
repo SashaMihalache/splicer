@@ -9,9 +9,9 @@
 
 ### start docker container
 
-`sudo docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=internship_user' \
-   -p 1535:1535 --name internship_db \
-   -d microsoft/mssql-server-linux:2017-latest`
+`sudo docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=internship_user'` <br/>
+`   -p 1535:1535 --name internship_db ` <br/>
+`   -d microsoft/mssql-server-linux:2017-latest` <br/>
 
 <br/>
 
@@ -23,11 +23,9 @@
 
 ### change sa user's password
 
-`sudo docker exec -it sql1 /opt/mssql-tools/bin/sqlcmd \
-   -S localhost -U SA -P 'intership_user' \
-   -Q 'ALTER LOGIN SA WITH PASSWORD="internship_user_NEW_PASSWORD"'`
-
-<br/>
+`sudo docker exec -it sql1 /opt/mssql-tools/bin/sqlcmd` <br/>
+`   -S localhost -U SA -P 'intership_user'` <br/>
+`   -Q 'ALTER LOGIN SA WITH PASSWORD="internship_user_NEW_PASSWORD"'` <br/>
 
 ### connect to sql server
 
@@ -43,19 +41,19 @@
 
 ### working with sql from terminal (type GO after each statement)
 
-`CREATE DATABASE InternshipProject
-USE InternshipProject`
+`CREATE DATABASE InternshipProject` <br/>
+`USE InternshipProject`
 
 <br/>
 
-`SELECT Name from sys.Databases
-SELECT Name from sys.Tables`
+`SELECT Name from sys.Databases` <br/>
+`SELECT Name from sys.Tables`
 
 <br/>
 
-`CREATE TABLE test ( id INT, name NVARCHAR(50), quantity INT )
-CREATE TABLE audio ( id INT IDENTITY(1,1) PRIMARY KEY, name NVARCHAR(50), blobdata VARBINARY(MAX))
-INSERT INTO test values (1, 'sasha', 10)
+`CREATE TABLE test ( id INT, name NVARCHAR(50), quantity INT )` <br/>
+`CREATE TABLE audio ( id INT IDENTITY(1,1) PRIMARY KEY, name NVARCHAR(50), blobdata VARBINARY(MAX))` <br/>
+`INSERT INTO test values (1, 'sasha', 10)` <br/>
 GO`
 
 <br/>
@@ -67,16 +65,15 @@ exit`
 <br/>
 
 ### remove container
-`docker stop sql1
-<br/>
-docker rm sql1`
+`docker stop sql1` <br/>
+`docker rm sql1`
 
 <br/>
 
 ### copy files from your machine to docker container
 
-`cd /backend/db_scripts <br/>
-tar -c * | docker exec -i sql1 /bin/tar -C /tmp -x`
+`cd /backend/db_scripts` <br/>
+`tar -c * | docker exec -i sql1 /bin/tar -C /tmp -x`
 
 <br/>
 
