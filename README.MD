@@ -79,6 +79,6 @@ move in /tmp folder where the files where copied and run
 ### make a shell script to run this automatically
 1. apt-get update (to update linux advance package tool)
 2. apt-get install vim
-3. use vim to write in a seed.sh '../opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P 'P@ssw0rd' -i ./UpdateDb.sql' command
+3. use vim to write in the seed.sh script file: `'../opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P 'P@ssw0rd' -i ./UpdateDb.sql' command`
 4. chmod +x seed.sh (to give permission to execute file)
 5. from terminal run it ./script.sh
