@@ -21,7 +21,7 @@
 ### change sa user's password
 
 `sudo docker exec -it sql1 /opt/mssql-tools/bin/sqlcmd` <br/>
-`   -S localhost -U SA -P 'intership_user'` <br/>
+`   -S localhost -U sa -P 'intership_user'` <br/>
 `   -Q 'ALTER LOGIN SA WITH PASSWORD="internship_user_NEW_PASSWORD"'` <br/>
 
 ### connect to sql server
